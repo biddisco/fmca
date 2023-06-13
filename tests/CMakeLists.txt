@@ -12,6 +12,7 @@ add_test(H2Matrix test_H2Matrix.out)
 
 add_executable(test_H2SampletCompressor.out test_H2SampletCompressor.cpp)
 add_test(H2SampletCompressor test_H2SampletCompressor.out)
+add_sanitizer_flags(test_H2SampletCompressor.out)
 
 add_executable(test_H2SampletCompressorUnsymmetric.out
   test_H2SampletCompressorUnsymmetric.cpp)

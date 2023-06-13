@@ -22,6 +22,34 @@ license and without any warranty, see <https://github.com/muchip/FMCA>
 for further information.
 ")
 
+option(FMCA_WITH_SANITIZER "build FMCA using address sanitzer flags" OFF)
+
+function(add_sanitizer_flags target)
+    if(FMCA_WITH_SANITIZER)
+      target_compile_options(
+        ${target}
+        PRIVATE -fsanitize=address
+                -fsanitize=undefined
+                -fno-sanitize-recover=all
+                -fsanitize=float-divide-by-zero
+                -fsanitize=float-cast-overflow
+                -fno-sanitize=null
+                -fno-sanitize=alignment
+      )
+      target_link_options(
+        ${target}
+        PRIVATE
+        -fsanitize=address
+        -fsanitize=undefined
+        -fno-sanitize-recover=all
+        -fsanitize=float-divide-by-zero
+        -fsanitize=float-cast-overflow
+        -fno-sanitize=null
+        -fno-sanitize=alignment
+      )
+    endif()
+endfunction()
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 find_package(Eigen3 REQUIRED)
 find_package(Python COMPONENTS Interpreter Development)
